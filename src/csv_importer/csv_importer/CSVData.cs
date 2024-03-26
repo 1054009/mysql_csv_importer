@@ -112,7 +112,7 @@ namespace csv_importer
 				ColumnSets.Add(ColumnBlock);
 			}
 
-			return string.Join(" ", ColumnSets);
+			return string.Join(", ", ColumnSets);
 		}
 
 		public string GetTableQuery()
