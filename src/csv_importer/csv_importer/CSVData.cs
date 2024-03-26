@@ -5,6 +5,8 @@ namespace csv_importer
 {
 	public class CSVData
 	{
+		public string TableName { get; protected set; }
+
 		public List<string> ColumnNames { get; protected set; }
 
 		public List<MySQL_Type> ColumnDataTypes { get; protected set; }
@@ -15,7 +17,7 @@ namespace csv_importer
 
 		private DataTypes TypeManager;
 
-		public CSVData()
+		public CSVData(string TableName = "unknown")
 		{
 			this.ColumnNames = new List<string>();
 			this.ColumnDataTypes = new List<MySQL_Type>();
@@ -23,6 +25,8 @@ namespace csv_importer
 
 			this.Cleaner = new StringCleaner();
 			this.TypeManager = new DataTypes();
+
+			this.TableName = this.Cleaner.CleanFileName(TableName);
 
 			this.Clear(); // Redundant
 		}

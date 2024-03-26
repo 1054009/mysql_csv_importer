@@ -11,7 +11,7 @@ namespace csv_importer
 	{
 		public Dictionary<string, string> Files { get; protected set; } // <PathToFile, SQL Table Name>
 
-		private Dictionary<string, CSVData> CSVFiles;
+		private List<CSVData> CSVFiles;
 
 		private StringCleaner Cleaner;
 
@@ -20,7 +20,7 @@ namespace csv_importer
 		public Importer()
 		{
 			this.Files = new Dictionary<string, string>();
-			this.CSVFiles = new Dictionary<string, CSVData>();
+			this.CSVFiles = List<CSVData>();
 
 			this.Cleaner = new StringCleaner();
 		}
@@ -64,10 +64,15 @@ namespace csv_importer
 
 			foreach (KeyValuePair<string, string> Pair in this.Files)
 			{
-				CSVData CSV = Parser.HandleFile(Pair.Key);
+				CSVData CSV = Parser.HandleFile(Pair.Key, Pair.Value);
 
-				this.CSVFiles.Add(Pair.Value, CSV);
+				this.CSVFiles.Add(CSV);
 			}
+		}
+
+		public void Import()
+		{
+
 		}
 
 		public MySqlErrorCode ConnectToDatabase()

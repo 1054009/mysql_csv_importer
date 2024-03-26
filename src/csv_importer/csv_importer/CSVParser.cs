@@ -43,12 +43,12 @@ namespace csv_importer
 		}
 
 		// <<List of Column Names, List of Column Types>, List of <Column Name, Data>>
-		public CSVData HandleFile(string FilePath)
+		public CSVData HandleFile(string FilePath, string TableName)
 		{
 			if (!File.Exists(FilePath))
 				return null;
 
-			this.CSV = new CSVData();
+			this.CSV = new CSVData(TableName);
 
 			this.LoadBasicData(FilePath);
 
