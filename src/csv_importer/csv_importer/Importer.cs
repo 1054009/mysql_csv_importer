@@ -17,8 +17,8 @@ namespace csv_importer
 
 		public string CleanString(string Target)
 		{
-			Target = this.Remover.Replace(Target, "");
 			Target = Target.Trim();
+			Target = this.Remover.Replace(Target, "");
 
 			return Target;
 		}
