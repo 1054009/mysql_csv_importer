@@ -70,9 +70,33 @@ namespace csv_importer
 			}
 		}
 
+		public void SendQuery(string Query)
+		{
+			MySqlCommand Command = new MySqlCommand(Query, this.SQLConnection);
+			Command.ExecuteNonQuery();
+		}
+
 		public void Import()
 		{
+			Console.WriteLine("Starting import...");
 
+			foreach (CSVData CSV in this.CSVFiles)
+			{
+				this.SendQuery(string.Format("DROP TABLE IF EXISTS {0};", CSV.TableName));
+
+				string TableQuery = CSV.GetTableQuery();
+				Console.WriteLine("Creating table {0} with types ( {1} ) => {2}", CSV.TableName, string.Join(", ", CSV.ColumnDataTypes), TableQuery);
+
+				this.SendQuery(TableQuery);
+
+				for (int i = 0; i < CSV.RowData.Count; i++)
+				{
+					string RowQuery = CSV.GetRowQuery(i);
+					Console.WriteLine("Importing row with ( {0} ) => {1}", CSV.GetQueryRows(CSV.RowData[i]), RowQuery);
+
+					this.SendQuery(RowQuery);
+				}
+			}
 		}
 
 		public MySqlErrorCode ConnectToDatabase()
