@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Security;
 
 namespace csv_importer
 {
@@ -10,6 +14,8 @@ namespace csv_importer
 		private Dictionary<string, CSVData> CSVFiles;
 
 		private StringCleaner Cleaner;
+
+		MySqlConnection connection;
 
 		public Importer()
 		{
@@ -61,6 +67,46 @@ namespace csv_importer
 				CSVData CSV = Parser.HandleFile(Pair.Key);
 
 				this.CSVFiles.Add(Pair.Value, CSV);
+			}
+		}
+
+		public MySqlErrorCode ConnectToDatabase()
+		{
+			string ServerName = "localhost";
+			string Database = Program.GetUserInput("Enter Destination DataBase Name: ");
+			string Username = "root";
+			SecureString Password = Program.GetUserInput("Enter MySql Password: ", true);
+
+			string PlainPassword = new NetworkCredential(string.Empty, Password).Password; // Kind of defeats the purpose of using a SecureString, but I'm unsure of how else to transfer this to MySql
+
+			string ConnectQuery = string.Format("SERVER={0}; DATABASE={1}; UID={2}; PASSWORD={3};", ServerName, Database, Username, PlainPassword);
+			this.connection = new MySqlConnection(ConnectQuery);
+
+			try
+			{
+				connection.Open();
+				Console.WriteLine("Connected to MySql.");
+
+				return MySqlErrorCode.Yes;
+			}
+			catch (MySqlException Exception)
+			{
+				return (MySqlErrorCode)Exception.Number;
+			}
+		}
+
+		public void DisconnectFromDatabase()
+		{
+			if (this.connection != null)
+			{
+				Console.WriteLine("Disconnecting from MySql.");
+
+				try
+				{
+					this.connection.Close();
+					this.connection.Dispose();
+				}
+				catch (Exception) { }
 			}
 		}
 	}
