@@ -117,7 +117,7 @@ namespace csv_importer
 
 		public string GetTableQuery()
 		{
-			return string.Format("CREATE TABLE IF NOT EXISTS {0} ( {1} );", this.TableName, this.GetQueryColumns());
+			return string.Format("CREATE TABLE {0} ( {1} );", this.TableName, this.GetQueryColumns());
 		}
 
 		public string GetQueryRows(List<string> Row)
