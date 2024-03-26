@@ -12,7 +12,7 @@ namespace csv_importer
 		public Importer()
 		{
 			this.Files = new Dictionary<string, string>();
-			this.Remover = new Regex("[^a-zA-Z]");
+			this.Remover = new Regex("[^a-zA-Z_]");
 		}
 
 		public string CleanString(string Target)
