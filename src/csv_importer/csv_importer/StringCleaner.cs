@@ -36,13 +36,16 @@ namespace csv_importer
 
 			// Fix empty spots causing rows to not be imported at all
 			if (Block.Length < 1)
-				return "null";
+				return "NULL";
 
 			return Block;
 		}
 
 		public string FixSQLString(string Block)
 		{
+			if (Block.Equals("NULL")) // Let nulls chill
+				return Block;
+
 			MySQL_Type Type = (new DataTypes()).GetTypeOf(Block);
 
 			if (Type == MySQL_Type.TEXT || Type == MySQL_Type.DATE || Type == MySQL_Type.DATETIME || Type == MySQL_Type.TIMESTAMP || Type == MySQL_Type.TIME)
