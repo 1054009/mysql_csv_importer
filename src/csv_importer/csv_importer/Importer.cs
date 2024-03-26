@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace csv_importer
@@ -54,10 +55,11 @@ namespace csv_importer
 
 			foreach (string FilePath in this.Files.Keys)
 			{
-				KeyValuePair<List<string>, List<Dictionary<string, string>>> FileData = Parser.HandleFile(FilePath);
+				CSVData CSV = Parser.HandleFile(FilePath);
 
-				List<string> ColumnNames = FileData.Key;
-				List<Dictionary<string, string>> RowData = FileData.Value;
+				Console.WriteLine(CSV.RowData.Count);
+
+				break;
 			}
 		}
 	}
