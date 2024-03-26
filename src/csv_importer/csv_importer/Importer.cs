@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace csv_importer
@@ -8,11 +7,15 @@ namespace csv_importer
 	{
 		public Dictionary<string, string> Files { get; protected set; } // <PathToFile, SQL Table Name>
 
+		private Dictionary<string, CSVData> CSVFiles;
+
 		private StringCleaner Cleaner;
 
 		public Importer()
 		{
 			this.Files = new Dictionary<string, string>();
+			this.CSVFiles = new Dictionary<string, CSVData>();
+
 			this.Cleaner = new StringCleaner();
 		}
 
@@ -49,17 +52,15 @@ namespace csv_importer
 			}
 		}
 
-		public void HandleFiles()
+		public void LoadFiles()
 		{
 			CSVParser Parser = new CSVParser();
 
-			foreach (string FilePath in this.Files.Keys)
+			foreach (KeyValuePair<string, string> Pair in this.Files)
 			{
-				CSVData CSV = Parser.HandleFile(FilePath);
+				CSVData CSV = Parser.HandleFile(Pair.Key);
 
-				Console.WriteLine(CSV.RowData.Count);
-
-				break;
+				this.CSVFiles.Add(Pair.Value, CSV);
 			}
 		}
 	}

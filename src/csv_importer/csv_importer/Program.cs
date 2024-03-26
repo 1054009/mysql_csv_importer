@@ -17,7 +17,7 @@ namespace csv_importer
 			Importer CSVImporter = new Importer();
 
 			CSVImporter.AddFromDirectory(GetCurrentDirectory());
-			CSVImporter.HandleFiles();
+			CSVImporter.LoadFiles();
 		}
 	}
 }
