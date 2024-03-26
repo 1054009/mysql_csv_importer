@@ -9,9 +9,7 @@
 
 *.FileListAbsolute.txt
 
-/src/csv_importer/csv_importer/bin
-/src/csv_importer/csv_importer/obj
-
-/src/csv_importer/.vs
-/src/csv_importer/csv_importer/.vs
-/src/csv_importer/packages
+/src/**/.vs
+/src/**/bin
+/src/**/obj
+/src/**/packages
