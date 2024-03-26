@@ -98,5 +98,45 @@ namespace csv_importer
 
 			this.RowData.Add(ListRow);
 		}
+
+		public string GetQueryColumns()
+		{
+			List<string> ColumnSets = new List<string>();
+
+			for (int i = 0; i < this.ColumnNames.Count; i++)
+			{
+				MySQL_Type ColumnType = this.ColumnDataTypes[i];
+
+				string ColumnBlock = string.Format("{0} {1} ", this.ColumnNames[i], ColumnType.ToString());
+
+				ColumnSets.Add(ColumnBlock);
+			}
+
+			return string.Join(" ", ColumnSets);
+		}
+
+		public string GetTableQuery()
+		{
+			return string.Format("CREATE TABLE IF NOT EXISTS {0} ( {1} );", this.TableName, this.GetQueryColumns());
+		}
+
+		public string GetQueryRows(List<string> Row)
+		{
+			List<string> RowSets = new List<string>();
+
+			foreach (string RowBlock in Row)
+				RowSets.Add(this.Cleaner.FixSQLString(RowBlock));
+
+			return string.Join(", ", RowSets);
+		}
+
+		public string GetRowQuery(int Index)
+		{
+			List<string> Row = this.RowData[Index];
+
+			string ColumnNamesFlat = string.Join(", ", this.ColumnNames);
+
+			return string.Format("INSERT INTO {0}( {1} ) VALUES ( {2} );", this.TableName, ColumnNamesFlat, this.GetQueryRows(Row));
+		}
 	}
 }
