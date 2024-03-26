@@ -20,7 +20,7 @@ namespace csv_importer
 		public Importer()
 		{
 			this.Files = new Dictionary<string, string>();
-			this.CSVFiles = List<CSVData>();
+			this.CSVFiles = new List<CSVData>();
 
 			this.Cleaner = new StringCleaner();
 		}
