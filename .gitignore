@@ -7,3 +7,6 @@
 *.vsidx
 
 *.FileListAbsolute.txt
+
+/src/csv_importer/csv_importer/bin
+/src/csv_importer/csv_importer/obj
