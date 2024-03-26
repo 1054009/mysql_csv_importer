@@ -15,7 +15,7 @@ namespace csv_importer
 
 		private StringCleaner Cleaner;
 
-		MySqlConnection connection;
+		MySqlConnection SQLConnection;
 
 		public Importer()
 		{
@@ -85,11 +85,11 @@ namespace csv_importer
 			string PlainPassword = new NetworkCredential(string.Empty, Password).Password; // Kind of defeats the purpose of using a SecureString, but I'm unsure of how else to transfer this to MySql
 
 			string ConnectQuery = string.Format("SERVER={0}; DATABASE={1}; UID={2}; PASSWORD={3};", ServerName, Database, Username, PlainPassword);
-			this.connection = new MySqlConnection(ConnectQuery);
+			this.SQLConnection = new MySqlConnection(ConnectQuery);
 
 			try
 			{
-				connection.Open();
+				this.SQLConnection.Open();
 				Console.WriteLine("Connected to MySql.");
 
 				return MySqlErrorCode.Yes;
@@ -102,14 +102,14 @@ namespace csv_importer
 
 		public void DisconnectFromDatabase()
 		{
-			if (this.connection != null)
+			if (this.SQLConnection != null)
 			{
 				Console.WriteLine("Disconnecting from MySql.");
 
 				try
 				{
-					this.connection.Close();
-					this.connection.Dispose();
+					this.SQLConnection.Close();
+					this.SQLConnection.Dispose();
 				}
 				catch (Exception) { }
 			}
