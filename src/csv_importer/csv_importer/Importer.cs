@@ -1,26 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 
 namespace csv_importer
 {
 	public class Importer
 	{
 		public Dictionary<string, string> Files { get; protected set; } // <PathToFile, SQL Table Name>
-		private Regex Remover;
+		private StringCleaner Cleaner;
 
 		public Importer()
 		{
 			this.Files = new Dictionary<string, string>();
-			this.Remover = new Regex("[^a-zA-Z_]");
-		}
-
-		public string CleanString(string Target)
-		{
-			Target = Target.Trim();
-			Target = this.Remover.Replace(Target, "");
-
-			return Target;
+			this.Cleaner = new StringCleaner();
 		}
 
 		public string GetFileNameWithoutExtension(string FilePath)
@@ -33,7 +24,7 @@ namespace csv_importer
 
 			FilePath = Path.GetFileNameWithoutExtension(FilePath);
 
-			return this.CleanString(FilePath);
+			return this.Cleaner.CleanFileName(FilePath);
 		}
 
 		public void AddFromDirectory(string SearchDirectory)
@@ -54,11 +45,6 @@ namespace csv_importer
 
 				this.Files.Add(DirectoryEntry, FileName);
 			}
-		}
-
-		public void DropFiles()
-		{
-			Files.Clear();
 		}
 	}
 }
