@@ -40,5 +40,15 @@ namespace csv_importer
 
 			return Block;
 		}
+
+		public string FixSQLString(string Block)
+		{
+			MySQL_Type Type = (new DataTypes()).GetTypeOf(Block);
+
+			if (Type == MySQL_Type.TEXT)
+				return string.Format("'{0}'", Block);
+
+			return Block;
+		}
 	}
 }
