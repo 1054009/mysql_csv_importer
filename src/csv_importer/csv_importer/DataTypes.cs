@@ -6,8 +6,7 @@ namespace csv_importer
 	public enum MySQL_Type
 	{
 		INVALID = -1,
-		NULL = 0,
-		INT,
+		INT = 0,
 		DOUBLE,
 		DATE,
 		DATETIME,
