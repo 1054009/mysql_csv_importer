@@ -19,7 +19,7 @@ namespace csv_importer
 			this.Cleaner = new StringCleaner();
 		}
 
-		public string GetFileNameWithoutExtension(string FilePath)
+		private string GetFileNameWithoutExtension(string FilePath)
 		{
 			FilePath = Path.GetFileName(FilePath);
 			FilePath = FilePath.ToLower();
