@@ -6,6 +6,7 @@ namespace csv_importer
 	public class Importer
 	{
 		public Dictionary<string, string> Files { get; protected set; } // <PathToFile, SQL Table Name>
+
 		private StringCleaner Cleaner;
 
 		public Importer()
@@ -44,6 +45,19 @@ namespace csv_importer
 				if (string.IsNullOrEmpty(FileName)) continue;
 
 				this.Files.Add(DirectoryEntry, FileName);
+			}
+		}
+
+		public void HandleFiles()
+		{
+			CSVParser Parser = new CSVParser();
+
+			foreach (string FilePath in this.Files.Keys)
+			{
+				KeyValuePair<List<string>, List<Dictionary<string, string>>> FileData = Parser.HandleFile(FilePath);
+
+				List<string> ColumnNames = FileData.Key;
+				List<Dictionary<string, string>> RowData = FileData.Value;
 			}
 		}
 	}
