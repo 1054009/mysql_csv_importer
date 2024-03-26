@@ -1,0 +1,8 @@
+*.cache
+*.exe
+*.json
+*.pdb
+*.suo
+*.vsidx
+
+*.FileListAbsolute.txt
