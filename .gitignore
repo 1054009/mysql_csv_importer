@@ -1,5 +1,6 @@
 *.cache
 *.csv
+*.dll
 *.exe
 *.json
 *.pdb
