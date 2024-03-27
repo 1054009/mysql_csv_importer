@@ -70,9 +70,14 @@ namespace csv_importer
 			}
 		}
 
-		public void SendQuery(string Query)
+		public string FormatQuery(string Base, params string[] Format)
 		{
-			MySqlCommand Command = new MySqlCommand(Query, this.SQLConnection);
+			return string.Format(Base, Format);
+		}
+
+		public void SendQuery(string Query, params string[] Format)
+		{
+			MySqlCommand Command = new MySqlCommand(this.FormatQuery(Query, Format), this.SQLConnection);
 			Command.ExecuteNonQuery();
 		}
 
@@ -82,7 +87,7 @@ namespace csv_importer
 
 			foreach (CSVData CSV in this.CSVFiles)
 			{
-				this.SendQuery(string.Format("DROP TABLE IF EXISTS {0};", CSV.TableName));
+				this.SendQuery("DROP TABLE IF EXISTS {0};", CSV.TableName);
 
 				string TableQuery = CSV.GetTableQuery();
 				Console.WriteLine("Creating table {0} with types ( {1} ) => {2}", CSV.TableName, string.Join(", ", CSV.ColumnDataTypes), TableQuery);
@@ -116,7 +121,7 @@ namespace csv_importer
 				this.SQLConnection.Open();
 				Console.WriteLine("Connected to MySql.");
 
-				this.SendQuery(string.Format("CREATE DATABASE IF NOT EXISTS {0};", Database));
+				this.SendQuery("CREATE DATABASE IF NOT EXISTS {0};", Database);
 				this.SQLConnection.ChangeDatabase(Database);
 
 				Console.WriteLine("Attached to database.");
