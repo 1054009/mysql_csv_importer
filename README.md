@@ -13,20 +13,20 @@ Then, copy and paste any HTML code into the displayed text box and save the gene
 
 ## Data Types
 
-Data resembling a whole number will be treated as `INT`. \
-Data resembling a decimal number will be treated as `DOUBLE`. 
+Data resembling a whole number will be treated as `INT` \
+Data resembling a decimal number will be treated as `DOUBLE` 
 
-Data in the format of `YYYY/MM/DD` will be converted to `YYYY-MM-DD`. \
-Data in the format of `YYYY/MM/DD HH:MM:SS` will be converted to `YYYY-MM-DD HH:MM:SS`.
+Data in the format of `YYYY/MM/DD` will be converted to `YYYY-MM-DD` \
+Data in the format of `YYYY/MM/DD HH:MM:SS` will be converted to `YYYY-MM-DD HH:MM:SS`
 
-Data in the format of `YYYY-MM-DD` will be treated as `DATE`. \
-Data in the format of `YYYY-MM-DD HH:MM:SS` will be treated as `DATETIME`. \
-Data in the format of `YYYYMMDDHHMMSS` will be treated as `TIMESTAMP`. \
-Data in the format of `HH:MM:SS` will be treated as `TIME`.
+Data in the format of `YYYY-MM-DD` will be treated as `DATE` \
+Data in the format of `YYYY-MM-DD HH:MM:SS` will be treated as `DATETIME` \
+Data in the format of `YYYYMMDDHHMMSS` will be treated as `TIMESTAMP` \
+Data in the format of `HH:MM:SS` will be treated as `TIME`
 
-Data equal to `NULL` will remain as `NULL`.
+Data equal to `NULL` will remain as `NULL`
 
-Any other type of data will be treated as `TEXT`.
+Any other type of data will be treated as `TEXT`
 
 ## Credits
 
