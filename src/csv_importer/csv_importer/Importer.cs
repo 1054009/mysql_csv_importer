@@ -108,13 +108,18 @@ namespace csv_importer
 
 			string PlainPassword = new NetworkCredential(string.Empty, Password).Password; // Kind of defeats the purpose of using a SecureString, but I'm unsure of how else to transfer this to MySql
 
-			string ConnectQuery = string.Format("SERVER={0}; DATABASE={1}; UID={2}; PASSWORD={3};", ServerName, Database, Username, PlainPassword);
+			string ConnectQuery = string.Format("SERVER={0}; UID={2}; PASSWORD={3};", ServerName, Database, Username, PlainPassword);
 			this.SQLConnection = new MySqlConnection(ConnectQuery);
 
 			try
 			{
 				this.SQLConnection.Open();
 				Console.WriteLine("Connected to MySql.");
+
+				this.SendQuery(string.Format("CREATE DATABASE IF NOT EXISTS {0};", Database));
+				this.SQLConnection.ChangeDatabase(Database);
+
+				Console.WriteLine("Attached to database.");
 
 				return MySqlErrorCode.Yes;
 			}
