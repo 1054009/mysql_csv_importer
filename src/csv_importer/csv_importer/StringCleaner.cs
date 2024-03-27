@@ -48,6 +48,9 @@ namespace csv_importer
 
 			MySQL_Type Type = (new DataTypes()).GetTypeOf(Block);
 
+			if (Type == MySQL_Type.DATE || Type == MySQL_Type.DATETIME)
+				Block = Block.Replace("/", "-");
+
 			if (Type == MySQL_Type.TEXT || Type == MySQL_Type.DATE || Type == MySQL_Type.DATETIME || Type == MySQL_Type.TIMESTAMP || Type == MySQL_Type.TIME)
 				return string.Format("'{0}'", Block);
 
