@@ -85,6 +85,8 @@ namespace csv_importer
 		{
 			Console.WriteLine("Starting import...");
 
+			this.SendQuery("START TRANSACTION;");
+
 			foreach (CSVData CSV in this.CSVFiles)
 			{
 				this.SendQuery("DROP TABLE IF EXISTS {0};", CSV.TableName);
@@ -102,6 +104,8 @@ namespace csv_importer
 					this.SendQuery(RowQuery);
 				}
 			}
+
+			this.SendQuery("COMMIT;");
 		}
 
 		public MySqlErrorCode ConnectToDatabase()
